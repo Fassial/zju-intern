@@ -32,14 +32,14 @@ class MyExplorer():
 
 
 # example
-dataset = MyExplorer(ipath,lpath)
+#dataset = MyExplorer(ipath,lpath)
 
-img = dataset.subimg(79389)
-label = dataset.label(79389)
+#img = dataset.subimg(79389)
+#label = dataset.label(79389)
 
 
-plt.imshow(img)
-plt.show()
+#plt.imshow(img)
+#plt.show()
 
 
 
