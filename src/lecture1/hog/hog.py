@@ -82,7 +82,7 @@ def _hog_histograms(g_row, g_col, c_row, c_col, orientations):
                                 H = c_row
                             )
                             orientation_histogram[i, j, k] += G * grad * (1 - (angle - k * angle_unit) / angle_unit)
-                            orientation_histogram[i, j, k] += G * grad * (1 - (angle - k * angle_unit) / angle_unit)
+                            orientation_histogram[i, j, (k+1)%orientations] += G * grad * ((angle - k * angle_unit) / angle_unit)
 
     # return res
     return orientation_histogram
