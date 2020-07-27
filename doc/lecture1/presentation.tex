@@ -11,7 +11,7 @@
 \usepackage{algorithm}
 \usepackage{amsthm}
 \usepackage{lmodern} % 解决 font warning
-% \usepackage[UTF8]{ctex}
+\usepackage[UTF8]{ctex}
 \usepackage{animate} % insert gif
 
 \usepackage{lipsum} % To generate test text 
@@ -197,7 +197,7 @@
 % ---------------------------------------------------------------------
 
 %% preamble
-\title[Presentation Template]{Presentation Template}
+\title[Hog Binary Classifier]{Hog Binary Classifier}
 % \subtitle{The subtitle}
 \author{Internship Group 3}
 \institute[]{Wang PuLi, Zhang Ling, Zheng Hui}
@@ -216,7 +216,127 @@
 \subsection{}
 % content frame
 \begin{frame}
-test-content
+\frametitle{任务分工}
+\begin{columns}
+\begin{column}{.8\linewidth}
+\begin{itemize}
+	\item 张令: 数据预处理和数据标定.
+	\item 王普莉: Binary Classifier编写和ROC曲线绘制.
+	\item 郑晖: Hog算法实现.
+	\item 全部代码可见: {\href{https://github.com/Fassial/zju-intern}{https://github.com/Fassial/zju-intern}}
+\end{itemize}
+\end{column}
+\begin{column}{.2\linewidth}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\textwidth]{github.jpg}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{数据预处理和数据标定}
+\begin{columns}
+\begin{column}{.7\linewidth}
+\begin{itemize}
+	\item 框选篮筐部分
+	\begin{itemize}
+		\item recs1 = [880,90,960,170]
+		\item recs2 = [945,230,1025,310]
+		\item recs3 = [660,100,740,180]
+	\end{itemize}
+	\item 按帧分割为小图并作手工标定
+	\begin{itemize}
+		\item 按minute\_second\_frame的文件名格式分别保存在文件夹中。
+		\item 挑选正样本集放到新文件夹real下。
+	\end{itemize}
+	\item 缩放为40*40像素并合并为大图
+	\begin{itemize}
+		\item 每一行存放1分钟内的60*25张子图。
+		\item 将对应的label列表存入到npy文件中。
+	\end{itemize}
+	\item 编写My\_Explorers类，用于加载并访问数据集和标签
+\end{itemize}
+\end{column}
+\begin{column}{.3\linewidth}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\textwidth]{goal.jpg}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{数据预处理和数据标定}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\textwidth]{myExplorer.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Binary Classifier编写和ROC曲线绘制}
+\begin{columns}
+\begin{column}{.5\linewidth}
+\begin{itemize}
+	\item get\_data
+	\begin{itemize}
+		\item 功能：提供加载数据的函数。
+		\item 包含函数：read\_image。
+	\end{itemize}
+	\item binary\_classification
+	\begin{itemize}
+		\item 功能：提供用于训练、测试、画图的函数。
+		\item 包含函数：get\_hog、threshold\_classifier、get\_roc\_data、draw\_roc\_data等。
+	\end{itemize}
+	\item config.ini
+	\begin{itemize}
+		\item 功能：配置文件，包含加载路径和ROC曲线保存的路径。
+	\end{itemize}
+	\item main
+	\begin{itemize}
+		\item 功能：主程序。
+	\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{rocCurve.png}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Hog算法实现}
+\begin{columns}
+\begin{column}{.3\linewidth}
+\begin{itemize}
+	\item 依照\textbf{CVPR. 2005.177}实现Hog算法。
+\end{itemize}
+\end{column}
+\begin{column}{.7\linewidth}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\textwidth]{example.jpg}
+\end{figure}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\textwidth]{example-hog.jpg}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Hog Binary Classifier}
+\begin{enumerate}
+	\item Thanks for listening!
+	\item Q\&A
+\end{enumerate}
 \end{frame}
 
 \end{document}
