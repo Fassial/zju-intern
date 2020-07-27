@@ -52,7 +52,7 @@ def _hog_histograms(g_row, g_col, c_row, c_col, orientations):
     orientation_histogram = np.zeros((n_cells_row, n_cells_col, orientations))
 
     # compute orientations integral images
-    # row: x, col: y
+    # row: y, col: x
     for i in range(n_cells_row):
         for j in range(n_cells_col):
             for ii in range(c_row):
@@ -67,9 +67,22 @@ def _hog_histograms(g_row, g_col, c_row, c_col, orientations):
                     for k in range(orientations):
                         if (angle >= k * angle_unit) and (angle < (k + 1) * angle_unit):
                             # find corresponding orientation
-                            # the hog image is hard to see
+                            # 1. the hog image is hard to see
                             # orientation_histogram[i, j, k] += grad / (c_col * c_row)
-                            orientation_histogram[i, j, k] += grad
+                            # 2. the gradient is not spread out in the adjacent directions
+                            # orientation_histogram[i, j, k] += grad
+                            # 3. the gradient is spread out in the adjacent directions
+                            # orientation_histogram[i, j, k] += grad * (1 - (angle - k * angle_unit) / angle_unit)
+                            # orientation_histogram[i, j, (k+1)%orientations] += grad * ((angle - k * angle_unit) / angle_unit)
+                            # 4. consider the distance from the center
+                            G = utils.bilinear_func(
+                                x = (jj + 0.5) - (c_col / 2),
+                                y = (ii + 0.5) - (c_row / 2),
+                                W = c_col,
+                                H = c_row
+                            )
+                            orientation_histogram[i, j, k] += G * grad * (1 - (angle - k * angle_unit) / angle_unit)
+                            orientation_histogram[i, j, k] += G * grad * (1 - (angle - k * angle_unit) / angle_unit)
 
     # return res
     return orientation_histogram

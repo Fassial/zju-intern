@@ -30,3 +30,18 @@ def line(r0, c0, r1, c1, n_min = 5):
         x += step_x
         y += step_y
     return (res_y, res_x)
+
+"""
+bilinear_func:
+    calculate G using bilinear_func
+    @params:
+        x(int)  : distance on the x-axis
+        y(int)  : distance on the y-axis
+        W(int)  : maximum value of x
+        H(int)  : maximum value of y
+    @rets:
+        G(int)  : G
+"""
+def bilinear_func(x, y, W = 2, H = 2):
+    G = (1 - abs(x) / (W + 1)) * (1 - abs(y) / (H + 1))
+    return G
