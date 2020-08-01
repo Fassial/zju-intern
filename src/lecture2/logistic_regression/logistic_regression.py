@@ -82,7 +82,7 @@ class LogisticRegression:
             X = np.c_[np.ones(X.shape[0]), X]
 
         l_prev = np.inf
-        self.beta = np.random.rand(X.shape[1])
+        if self.beta == None: self.beta = np.random.rand(X.shape[1])
         for _ in range(int(max_iter)):
             y_pred = utils.sigmoid(np.dot(X, self.beta))
             loss = self._NLL(X, y, y_pred)
@@ -137,5 +137,9 @@ class LogisticRegression:
             X = np.c_[np.ones(X.shape[0]), X]
         return utils.sigmoid(np.dot(X, self.beta))
 
+def test():
+    pass
+
 if __name__ == "__main__":
-    main()
+    test()
+

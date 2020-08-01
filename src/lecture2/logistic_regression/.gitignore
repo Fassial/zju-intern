@@ -1,5 +1,9 @@
 # dir
 /__pycache__
+/data
 
 # file
 *.pyc
+*.jpg
+*.pkl
+
