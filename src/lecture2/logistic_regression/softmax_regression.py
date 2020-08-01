@@ -13,9 +13,9 @@ import utils
 
 class SoftmaxRegression:
 
-    def __init__(self, n_features, n_classes, penalty="l2", gamma=0, fit_intercept=True):
+    def __init__(self, n_features, n_classes, penalty="l2", gamma=0.01, fit_intercept=False):
         r"""
-        A simple logistic regression model fit via gradient descent on the
+        A simple softmax regression model fit via gradient descent on the
         penalized negative log likelihood.
         Parameters
         ----------
@@ -37,10 +37,12 @@ class SoftmaxRegression:
         # init sr params
         self.n_features = n_features
         self.n_classes = n_classes
-        self.beta = np.random.rand(n_classes, n_features+1)
         self.gamma = gamma
         self.penalty = penalty
         self.fit_intercept = fit_intercept
+        # set beta according to fit_intercept
+        self.beta = np.random.rand(n_classes, n_features+1) \
+            if self.fit_intercept else np.random.rand(n_classes, n_features)
 
     def _NLL(self, y, probs_pred):
         r"""
@@ -61,7 +63,9 @@ class SoftmaxRegression:
 
         nll = -np.sum(y_one_hot * np.log(probs_pred))
         penalty = (gamma / 2) * norm_beta ** 2 if order == 2 else gamma * norm_beta
-        return (penalty + nll) / n_samples
+        # loss = (penalty + nll) / n_samples
+        loss = penalty + (nll / n_samples)
+        return loss
 
     def _NLL_grad(self, X, y, probs_pred):
         """Gradient of the penalized negative log likelihood wrt beta"""
@@ -75,7 +79,10 @@ class SoftmaxRegression:
             n_samples = n_samples,
             n_classes = self.n_classes
         )
-        return -(np.dot((y_one_hot - probs_pred).T, X) + d_penalty) / n_samples
+        # grad = -(np.dot((y_one_hot - probs_pred).T, X) + d_penalty) / n_samples
+        grad = -(np.dot((y_one_hot - probs_pred).T, X) / n_samples) + d_penalty
+        grad[:, 0] -= d_penalty[:, 0]
+        return grad
 
     def forward(self, X):
         scores = X.dot(self.beta.T)
@@ -94,7 +101,7 @@ class SoftmaxRegression:
         y_pred = self.predict(X)
         return np.mean(y != y_pred)
 
-    def _train_model(self, X, y, lr=0.13):
+    def _train_model(self, X, y, lr=0.1):
         # convert X to a design matrix if we're fitting an intercept
         if self.fit_intercept:
             X = np.c_[np.ones(X.shape[0]), X]
@@ -108,6 +115,7 @@ class SoftmaxRegression:
         )
         # update beta
         self.beta -= lr * self._NLL_grad(X, y, probs_pred)
+        # print("accu:", sum(np.argmax(probs_pred, axis=1).reshape((-1,1)) == y)/y.shape[0])
         return loss
 
     def _valid_model(self, X, y):
@@ -118,7 +126,7 @@ class SoftmaxRegression:
         errors = self._errors(X, y)
         return errors
 
-    def train(self, X, y, lr=0.13, n_epochs=1e3, batch_size = 600):
+    def train(self, X, y, lr=0.1, n_epochs=1e3, batch_size = 600):
         """
         Fit the regression coefficients via gradient descent on the negative
         log likelihood.
@@ -249,6 +257,7 @@ def test():
     # get datasets
     datasets = utils.load_data(dataset = DATASET)
     (x_train, y_train), (x_valid, y_valid), (x_test, y_test) = datasets
+    (y_train, y_valid, y_test) = (y_train.reshape((-1,1)), y_valid.reshape((-1,1)), y_test.reshape((-1,1)))
     # test = x_train[0].copy(); utils.visualize_image(test)
     X, y = (x_train, x_valid, x_test), (y_train, y_valid, y_test)
     # get n_features & n_classes
@@ -262,9 +271,14 @@ def test():
     # train sr
     sr_inst.train(
         X = X,
-        y = y,
-        lr = 0.13
+        y = y
     )
+    # test sr
+    y_test_pred = sr_inst.predict(
+        X = x_test
+    )
+    accu = np.sum(y_test_pred == y_test) / y_test.shape[0]
+    print("test accu:", accu)
 
 if __name__ == "__main__":
     test()
