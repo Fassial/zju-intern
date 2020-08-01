@@ -1,29 +1,13 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import numpy as np
 import cv2 
 from matplotlib import pyplot as plt
-
-
-# In[2]:
-
 
 ipath = "allfull.jpg"
 lpath = "label.npy"
 
 
-# In[3]:
-
-
 # last of v1 : 46232
 # last of v2 : 91164
-
-
-# In[12]:
 
 
 class MyExplorer():
@@ -89,41 +73,20 @@ class MyExplorer():
         return train_x,train_y,valid_x,valid_y
 
 
-# In[13]:
+#example
+#dataset = MyExplorer(ipath,lpath)
+
+#X,Y,x,y = dataset.split_single()
+#img = X[5]
+#plt.imshow(img)
+#print(Y[5])
 
 
-dataset = MyExplorer(ipath,lpath)
+#XX,YY,xx,yy = dataset.split_double()
+#dimg = XX[5]
+#plt.imshow(dimg)
+#print(YY[5])
 
-
-# In[14]:
-
-
-X,Y,x,y = dataset.split_single()
-
-
-# In[18]:
-
-
-img = X[5]
-plt.imshow(img)
-print(Y[5])
-
-
-# In[15]:
-
-
-XX,YY,xx,yy = dataset.split_double()
-
-
-# In[17]:
-
-
-dimg = XX[5]
-plt.imshow(dimg)
-print(YY[5])
-
-
-# In[ ]:
 
 
 
