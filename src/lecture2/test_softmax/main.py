@@ -1,3 +1,4 @@
+import os
 import configparser
 import argparse
 # local dep
@@ -12,6 +13,7 @@ def set_config():
     ipath = config.get("user_para","ipath")
     lpath = config.get("user_para","lpath")
     save_fig_path = config.get("user_para", "save_fig_path")
+    if not os.path.exists(save_fig_path): os.mkdir(save_fig_path)
     print("config setting completed")
     return ipath,lpath,save_fig_path
 
@@ -19,7 +21,7 @@ def choose_exp(exp,ipath,lpath,save_fig_path,exp_name=None):
     if exp_name == exp_name_list[0]:
         print("exp0:diff_number")
         fig_name = "diff_number.svg"
-        number_list = [1000,2000,4000,8000,16000,32000,48000,60000]
+        number_list = [1000 ,2000,4000,8000,16000,32000,48000,60000]
         exp.train_diff_number(ipath,lpath,number_list,is_one_frame=True,
                           save_fig_path = save_fig_path,fig_name = fig_name)
 

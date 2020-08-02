@@ -31,6 +31,7 @@ class exp_train():
             y_test_pred = test_sft.get_score(x_test)
             rel_score.append(y_test_pred)
             true_list.append(y_test)
+        print("prepare to draw fig")
         draw_roc_plot(rel_score,true_list,number_list,save_fig_path,fig_name)
 
     def train_diff_batch_size(self, ipath, lpath, number_list, is_one_frame=True,
