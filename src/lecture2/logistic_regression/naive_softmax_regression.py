@@ -6,7 +6,7 @@ Created on August 02 00:06, 2020
 import numpy as np
 import matplotlib.pyplot as plt
 # local dep
-import utils
+import .utils
 
 def load_dataset(file_path):
     dataMat = []

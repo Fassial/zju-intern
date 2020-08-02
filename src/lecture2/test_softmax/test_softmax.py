@@ -4,9 +4,10 @@ import sys
 import timeit
 import numpy as np
 import six.moves.cPickle as pickle
-
-from softmax_regression import SoftmaxRegression
-import utils
+# local dep
+sys.path.append("..")
+from logistic_regression.softmax_regression import SoftmaxRegression
+from logistic_regression import utils
 
 class test_softmax_classifier(SoftmaxRegression):
     def __init__(self, n_features, n_classes, penalty="l2", gamma=0, fit_intercept=False):

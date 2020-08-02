@@ -1,7 +1,7 @@
 import configparser
-import train_softmax
 import argparse
-
+# local dep
+import .train_softmax
 
 exp_name_list = ["set_number","batch_size","lr","weight_decay","line_search","one_frame",""]
 

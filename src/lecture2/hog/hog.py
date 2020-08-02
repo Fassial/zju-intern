@@ -6,7 +6,7 @@ Created on July 22 00:28, 2020
 import math
 import numpy as np
 # local dep
-from hog.utils import line
+from .utils import line
 
 
 """

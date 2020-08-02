@@ -5,7 +5,7 @@ Created on August 01 02:02, 2020
 """
 import numpy as np
 # local dep
-import utils
+import .utils
 
 class LogisticRegression:
 
