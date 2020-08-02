@@ -3,8 +3,8 @@ import numpy as np
 import sys
 sys.path.append("..")
 from test_softmax import test_softmax_classifier
-from load_data.load_data import load_data
-from ROC_plot.ROC_plot.draw_plot import draw_roc_plot
+from load_data import load_data
+from ROC_plot.draw_plot import draw_roc_plot
 
 class exp_train():
     def __init__(self, n_classes, penalty="l2", fit_intercept=False):

@@ -18,6 +18,6 @@ def draw_roc_plot(score_list,true_list,number_list,save_fig_path,fig_name):
         plt.legend(loc='upper right', prop=font, frameon=False)
     save_fig_path = os.path.join(save_fig_path,fig_name)
     plt.savefig(save_fig_path, format='svg')
-    plt.show()
+    # plt.show()
 
 
