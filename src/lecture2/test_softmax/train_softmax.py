@@ -2,7 +2,7 @@ import numpy as np
 # local dep
 import sys
 sys.path.append("..")
-from .test_softmax import test_softmax_classifier
+from test_softmax import test_softmax_classifier
 from load_data.load_data import load_data
 from ROC_plot.ROC_plot.draw_plot import draw_roc_plot
 
