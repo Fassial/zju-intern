@@ -9,7 +9,8 @@ import timeit
 import numpy as np
 import six.moves.cPickle as pickle
 # local dep
-from . import utils
+# from . import utils
+import utils
 
 class SoftmaxRegression:
 
@@ -168,8 +169,17 @@ class SoftmaxRegression:
         test_score = 0.
         start_time = timeit.default_timer()
 
+        valid_loss
         done_looping = False
         epoch = 0
+        # compute zero-one loss on validation set
+        validation_losses = [self._valid_model(
+            X = x_valid[i*batch_size:(i+1)*batch_size],
+            y = y_valid[i*batch_size:(i+1)*batch_size]
+        ) for i in range(n_valid_batches)]
+        # compute mean valid-loss
+        this_validation_loss = np.mean(validation_losses)
+        valid_loss.append(this_validation_loss)
         while (epoch < n_epochs) and (not done_looping):
             epoch = epoch + 1
             for minibatch_index in range(n_train_batches):
@@ -189,6 +199,7 @@ class SoftmaxRegression:
                     ) for i in range(n_valid_batches)]
                     # compute mean valid-loss
                     this_validation_loss = np.mean(validation_losses)
+                    valid_loss.append(this_validation_loss)
                     # print valid info
                     print(
                         'epoch %i, minibatch %i/%i, validation error %f %%' %
@@ -250,6 +261,7 @@ class SoftmaxRegression:
         print(('The code for file ' +
                os.path.split(__file__)[1] +
                ' ran for %.1fs' % ((end_time - start_time))), file=sys.stderr)
+        return valid_loss
 
 DATASET = 'mnist.pkl.gz'
 
@@ -269,10 +281,10 @@ def test():
         n_classes = n_classes
     )
     # train sr
-    sr_inst.train(
+    valid_loss = sr_inst.train(
         X = X,
         y = y
-    )
+    ); print(valid_loss)
     # test sr
     y_test_pred = sr_inst.predict(
         X = x_test
