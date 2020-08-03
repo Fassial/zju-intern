@@ -20,7 +20,7 @@ def draw_roc_plot(score_list,true_list,number_list,save_fig_path,fig_name):
         y = true_list[i]
         #compute fpr & tpr
         fpr, tpr, threshold = roc_curve(y,y_pred)
-        plt.semilogx(fpr,1-tpr,color = color_list[i],label = '$number=%i$'%num)
+        plt.semilogx(fpr,tpr,color = color_list[i],label = '$number=%i$'%num)
         plt.legend(loc='upper right', prop=font, frameon=False)
     save_fig_path = os.path.join(save_fig_path,fig_name)
     plt.savefig(save_fig_path, format='svg')
