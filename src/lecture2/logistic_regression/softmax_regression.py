@@ -169,7 +169,7 @@ class SoftmaxRegression:
         test_score = 0.
         start_time = timeit.default_timer()
 
-        valid_loss
+        valid_loss = []
         done_looping = False
         epoch = 0
         # compute zero-one loss on validation set
