@@ -370,8 +370,14 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     test_score = 0.
     start_time = timeit.default_timer()
 
+    valid_loss = []
     done_looping = False
     epoch = 0
+    # compute zero-one loss on validation set
+    validation_losses = [validate_model(i)
+                         for i in range(n_valid_batches)]
+    this_validation_loss = numpy.mean(validation_losses)
+    valid_loss.append(this_validation_loss)
     while (epoch < n_epochs) and (not done_looping):
         epoch = epoch + 1
         for minibatch_index in range(n_train_batches):
@@ -385,6 +391,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                 validation_losses = [validate_model(i)
                                      for i in range(n_valid_batches)]
                 this_validation_loss = numpy.mean(validation_losses)
+                valid_loss.append(this_validation_loss)
 
                 print(
                     'epoch %i, minibatch %i/%i, validation error %f %%' %
@@ -444,6 +451,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     print(('The code for file ' +
            os.path.split(__file__)[1] +
            ' ran for %.1fs' % ((end_time - start_time))), file=sys.stderr)
+    return valid_loss
 
 
 def predict():
@@ -472,5 +480,5 @@ def predict():
 
 
 if __name__ == '__main__':
-    sgd_optimization_mnist()
+    valid_loss = sgd_optimization_mnist(); print(valid_loss)
 
