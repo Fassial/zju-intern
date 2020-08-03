@@ -373,6 +373,11 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     valid_loss = []
     done_looping = False
     epoch = 0
+    # compute zero-one loss on validation set
+    validation_losses = [validate_model(i)
+                         for i in range(n_valid_batches)]
+    this_validation_loss = numpy.mean(validation_losses)
+    valid_loss.append(this_validation_loss)
     while (epoch < n_epochs) and (not done_looping):
         epoch = epoch + 1
         for minibatch_index in range(n_train_batches):
