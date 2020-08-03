@@ -9,8 +9,8 @@ import timeit
 import numpy as np
 import six.moves.cPickle as pickle
 # local dep
-# from . import utils
-import utils
+from . import utils
+# import utils
 
 class SoftmaxRegression:
 
