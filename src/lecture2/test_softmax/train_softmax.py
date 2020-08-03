@@ -158,7 +158,7 @@ class exp_train():
             )
             X, y = (x_train, x_test, x_test), (y_train, y_test, y_test)
 
-            if number==0:test_sft.train(X,y,patience_value=float('inf'))
+            if number==0:test_sft.train(X,y,patience=float('inf'))
             else: test_sft.train(X,y)
             y_test_pred = test_sft.get_score(x_test)
             rel_score.append(y_test_pred)

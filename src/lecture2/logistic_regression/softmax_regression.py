@@ -126,7 +126,7 @@ class SoftmaxRegression:
         errors = self._errors(X, y)
         return errors
 
-    def train(self, X, y, lr=0.1, n_epochs=1e3, batch_size = 600):
+    def train(self, X, y, lr=0.1, n_epochs=1e3, batch_size = 600, patience = 5000):
         """
         Fit the regression coefficients via gradient descent on the negative
         log likelihood.
@@ -153,7 +153,7 @@ class SoftmaxRegression:
         # train
         print('... training the model')
         # early-stopping parameters
-        patience = 5000  # look as this many examples regardless
+        # patience look as this many examples regardless
         patience_increase = 2  # wait this much longer when a new best is
                                       # found
         improvement_threshold = 0.995  # a relative improvement of this much is

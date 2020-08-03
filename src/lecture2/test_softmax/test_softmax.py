@@ -15,6 +15,7 @@ class test_softmax_classifier(SoftmaxRegression):
 
     #get score to draw roc_curve
     def get_score(self,X):
+        # return self.predict(X)
         # convert X to a design matrix if we're fitting an intercept
         if self.fit_intercept:
             X = np.c_[np.ones(X.shape[0]), X]
