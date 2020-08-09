@@ -30,7 +30,7 @@ def test_kernels():
     prob  = svm_problem(train_y, train_X)
     for i in range(n):
         m = svm_train(prob, param_list[i])
-        p_labels, p_acc, p_vals = svm_predict(valid_y, valid_X, m,'-b 1')
+        p_labels, p_acc, p_vals = svm_predict(valid_y, valid_X, m)
         y_true = []
         for j in p_val:
             y_true.append(j[1])
@@ -49,7 +49,7 @@ def find_rbf_param():
     prob  = svm_problem(train_y, train_X)
     for i in range(n):
         m = svm_train(prob, param_list[i])
-        p_labels, p_acc, p_vals = svm_predict(valid_y, valid_X, m,'-b 1')
+        p_labels, p_acc, p_vals = svm_predict(valid_y, valid_X, m)
         y_true = []
         for j in p_val:
             y_true.append(j[1])
