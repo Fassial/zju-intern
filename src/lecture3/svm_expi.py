@@ -31,10 +31,7 @@ def test_kernels():
     for i in range(n):
         m = svm_train(prob, param_list[i])
         p_labels, p_acc, p_vals = svm_predict(valid_y, valid_X, m)
-        y_true = []
-        for j in p_val:
-            y_true.append(j[1])
-        np.save(name_list[i]+'.npy',np.array(y_true))
+        np.save(name_list[i]+'.npy',np.array(p_vals))
 
 def find_rbf_param():
     name_list = ['rbf_c_0.25_gamma_0.001','rbf_c_0.25_gamma_0.01','rbf_c_0.25_gamma_0.1','rbf_c_0.25_gamma_1',
@@ -50,10 +47,7 @@ def find_rbf_param():
     for i in range(n):
         m = svm_train(prob, param_list[i])
         p_labels, p_acc, p_vals = svm_predict(valid_y, valid_X, m)
-        y_true = []
-        for j in p_val:
-            y_true.append(j[1])
-        np.save(name_list[i]+'.npy',np.array(y_true))
+        np.save(name_list[i]+'.npy',np.array(p_vals))
 
 ## main function here
 if __name__ == "__main__":
