@@ -91,8 +91,10 @@ class HiddenLayer(object):
         self.delta = np.dot(next_delta,next_W.transpose()) * derivative
 
     def update_w_and_b(self, x, learning_rate, L2_lamda):
-        delta_w = - 1.0 * np.dot(x.transpose(), self.delta) / x.shape[0]
-        delta_b = - 1.0 * np.mean(self.delta, axis=0)
+        delta_w = - 1.0 * np.dot(x.transpose(), self.delta) / x.shape[1]
+        #delta_w = - 1.0 * np.dot(x.transpose(), self.delta) / x.shape[0]
+        #delta_b = - 1.0 * np.mean(self.delta, axis=0)
+        delta_b = - 1.0 * np.mean(self.delta, axis=0) / x.shape[1]
         self.W -= learning_rate * (delta_w + L2_lamda * self.W)
         self.b -= learning_rate * delta_b
 
@@ -212,8 +214,10 @@ class OutputLayer(object):
         self.delta = y_one_hot - probs_pred
 
     def update_w_and_b(self ,x ,learning_rate, L2_lamda):
-        delta_w = - 1.0 * np.dot(x.transpose(),self.delta)/x.shape[0]
-        delta_b = - 1.0 * np.mean(self.delta,axis=0)
+        # delta_w = - 1.0 * np.dot(x.transpose(), self.delta) / x.shape[0]
+        # delta_b = - 1.0 * np.mean(self.delta, axis=0)
+        delta_w = -1.0 * np.dot(x.transpose(),self.delta)/x.shape[1]
+        delta_b = -1.0 * np.mean(self.delta,axis=0)/x.shape[1]
         self.W -= learning_rate * (delta_w + L2_lamda * self.W)
         self.b -= learning_rate * delta_b
 
