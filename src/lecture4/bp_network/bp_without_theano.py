@@ -3,7 +3,8 @@ import timeit
 import os
 import sys
 import six.moves.cPickle as pickle
-import utils
+sys.path.append("..")
+import bp_network.utils
 
 #using tanh
 class HiddenLayer(object):
@@ -174,7 +175,7 @@ class OutputLayer(object):
 
     def forward(self,X):
         lin_output = np.dot(X, self.W) + self.b
-        probs = utils.softmax(lin_output)
+        probs = bp_network.utils.softmax(lin_output)
         self.output = probs
         return probs
 
@@ -187,7 +188,7 @@ class OutputLayer(object):
 
         norm_beta = np.linalg.norm(self.W, ord=2)
         # get y_one_hot
-        y_one_hot = utils.one_hot(
+        y_one_hot = bp_network.utils.one_hot(
             label = y,
             n_samples = n_samples,
             n_classes = self.n_out
@@ -202,7 +203,7 @@ class OutputLayer(object):
     def get_output_delta(self,y):
         probs_pred = self.output
         n_samples = probs_pred.shape[0]
-        y_one_hot = utils.one_hot(
+        y_one_hot = bp_network.utils.one_hot(
             label=y,
             n_samples=n_samples,
             n_classes= self.n_out
@@ -473,7 +474,7 @@ def test():
         X = X,
         y = y
     )
-    # test sr
+    # test mlp
     y_test_pred = mlp_test.predict_class(
         X = x_test
     )
